@@ -4,7 +4,11 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 app.use(express.json());
 
 // Ensure environment variables are set
@@ -60,6 +64,10 @@ app.get('/api/journeys', async (req, res) => {
 // Default route for health check or confirmation
 app.get('/', (req, res) => {
   res.send('Backend is running!');
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Backend is running!' });
 });
 
 // Start the server
