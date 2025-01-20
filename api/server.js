@@ -7,10 +7,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Ensure environment variables are set
+if (!process.env.MONGO_URI) {
+  console.error('Error: MONGO_URI environment variable not set.');
+  process.exit(1);
+}
+
+// Connect to MongoDB Atlas
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
 
 // Create Journey Schema
 const journeySchema = new mongoose.Schema(
@@ -47,6 +57,12 @@ app.get('/api/journeys', async (req, res) => {
   }
 });
 
+// Default route for health check or confirmation
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
+
+// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
