@@ -10,12 +10,15 @@ const languageContentSchema = new mongoose.Schema({
   selectLanguage: { type: String, required: true },
 });
 
-const multilingualSchema = new mongoose.Schema({
-  en: { type: languageContentSchema, required: true },
-  hu: { type: languageContentSchema, required: true },
-  ger: { type: languageContentSchema, required: true },
-  esp: { type: languageContentSchema, required: true },
-});
+const multilingualSchema = new mongoose.Schema(
+  {
+    en: { type: languageContentSchema, required: true },
+    hu: { type: languageContentSchema, required: true },
+    ger: { type: languageContentSchema, required: true },
+    esp: { type: languageContentSchema, required: true },
+  },
+  { collection: 'Languages' }
+);
 
 const MultilingualContent = mongoose.model(
   'MultilingualContent',

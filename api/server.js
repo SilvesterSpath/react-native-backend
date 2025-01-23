@@ -43,7 +43,6 @@ app.get('/api/languages', async (req, res) => {
   try {
     const languages = await MultilingualContent.find();
     res.json(languages);
-    clg('languages:', languages);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
