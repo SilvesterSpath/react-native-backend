@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const Journey = require('../schemas/journeySchema');
+const MultilingualContent = require('../schemas/languageSchema');
 
 const app = express();
 app.use(
@@ -26,36 +28,22 @@ mongoose
     process.exit(1);
   });
 
-// Create Journey Schema
-const journeySchema = new mongoose.Schema(
-  {
-    id: String,
-    title: String,
-    description: String,
-    icon: String,
-    stations: [
-      {
-        id: Number,
-        title: String,
-        prayer: String,
-        reflection: String,
-        familyActivity: String,
-        supportNote: String,
-        personalPrompt: String,
-        image: String,
-      },
-    ],
-  },
-  { collection: 'Journeys' }
-);
-
-const Journey = mongoose.model('Journey', journeySchema);
-
 // API endpoint to get all journeys
 app.get('/api/journeys', async (req, res) => {
   try {
     const journeys = await Journey.find();
     res.json(journeys);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// API endpoint to get all languages
+app.get('/api/languages', async (req, res) => {
+  try {
+    const languages = await MultilingualContent.find();
+    res.json(languages);
+    clg('languages:', languages);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
