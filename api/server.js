@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const Journey = require('../schemas/journeySchema');
 const MultilingualContent = require('../schemas/languageSchema');
+const MultilingualMenuContent = require('../schemas/menuSchema');
 
 const app = express();
 app.use(
@@ -43,6 +44,17 @@ app.get('/api/languages', async (req, res) => {
   try {
     const languages = await MultilingualContent.find();
     res.json(languages);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// API endpoint to get all menus
+app.get('/api/menus', async (req, res) => {
+  try {
+    const menus = await MultilingualMenuContent.find();
+    /* console.log('menus server', menus); */
+    res.json(menus);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
