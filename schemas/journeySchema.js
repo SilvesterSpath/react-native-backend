@@ -23,6 +23,6 @@ const journeySchema = new mongoose.Schema(
   { collection: 'Journeys' }
 );
 
-// Export the Journey model
 const Journey = mongoose.model('Journey', journeySchema);
+
 module.exports = Journey;

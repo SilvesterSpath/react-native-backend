@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const Journey = require('../schemas/journeySchema');
-const MultilingualContent = require('../schemas/languageSchema');
+const Journey_ = require('../schemas/journeySchema_');
 const MultilingualMenuContent = require('../schemas/menuSchema');
 
 const app = express();
@@ -39,11 +39,12 @@ app.get('/api/journeys', async (req, res) => {
   }
 });
 
-// API endpoint to get all languages
-app.get('/api/languages', async (req, res) => {
+// API endpoint to get all journeys_
+app.get('/api/journeys_', async (req, res) => {
   try {
-    const languages = await MultilingualContent.find();
-    res.json(languages);
+    const journeys_ = await Journey_.find();
+    console.log('server journeys_', journeys_);
+    res.json(journeys_);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -67,6 +68,17 @@ app.get('/', (req, res) => {
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend is running!' });
+});
+
+app.get('/api/test', async (req, res) => {
+  try {
+    const journeys_ = await Journey_.find(); // Test query
+    console.log('Test Query Result:', journeys_); // Log result
+    res.json(journeys_);
+  } catch (error) {
+    console.error('Test Query Error:', error.message);
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // Start the server
