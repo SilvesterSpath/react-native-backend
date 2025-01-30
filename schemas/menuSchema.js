@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 
 const menuContentSchema = new mongoose.Schema({
   title: { type: String, required: true },
+  main_title: { type: String, required: true },
+  station_name: { type: String, required: true },
+  prayer_short: { type: String, required: true },
+  prayer_long: { type: String, required: true },
+  previous: { type: String, required: true },
+  next: { type: String, required: true },
+  close: { type: String, required: true },
+  change_journey: { type: String, required: true },
+  reflection: { type: String, required: true },
+  reference: { type: String, required: true },
   subtitle: { type: String, required: true },
   beginJourney: { type: String, required: true },
   about: { type: String, required: true },
