@@ -25,7 +25,7 @@ const multilingualJourneySchema = new mongoose.Schema(
     en: { type: [journeySchema], required: true },
     ger: { type: [journeySchema], required: true },
   },
-  { collection: 'Journeys__' }
+  { collection: 'Journeys' }
 );
 
 const Journey = mongoose.model('Journey', multilingualJourneySchema);
