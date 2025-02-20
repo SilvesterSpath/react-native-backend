@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const Journey = require('../schemas/journeySchema');
-const Journey_ = require('../schemas/journeySchema');
 const MultilingualMenuContent = require('../schemas/menuSchema');
+const MultilingualDailyContent = require('../schemas/dailySchema');
 
 const app = express();
 app.use(
@@ -34,6 +34,16 @@ app.get('/api/journeys', async (req, res) => {
   try {
     const journeys = await Journey.find();
     res.json(journeys);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// API endpoint to get all daily content
+app.get('/api/daily', async (req, res) => {
+  try {
+    const daily = await MultilingualDailyContent.find();
+    res.json(daily);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
