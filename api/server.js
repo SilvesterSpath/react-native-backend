@@ -32,9 +32,20 @@ mongoose
 // API endpoint to get all journeys
 app.get('/api/journeys', async (req, res) => {
   try {
+    /*    console.log('🚀 Route hit: /api/journeys');
+
+    console.log('📡 Journey model collection name:', Journey.collection.name);
+    console.log(
+      '📡 Mongoose connection state:',
+      mongoose.connection.readyState
+    ); */
+
     const journeys = await Journey.find();
+    /* console.log('✅ Fetched journeys:', journeys); */
+
     res.json(journeys);
   } catch (error) {
+    console.error('❌ Error fetching journeys:', error.message);
     res.status(500).json({ message: error.message });
   }
 });
@@ -71,11 +82,32 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/test', async (req, res) => {
   try {
-    const journeys_ = await Journey_.find(); // Test query
-    console.log('Test Query Result:', journeys_); // Log result
-    res.json(journeys_);
+    console.log('🔍 Checking MongoDB state:', mongoose.connection.readyState);
+
+    if (mongoose.connection.readyState !== 1) {
+      console.error('❌ MongoDB is NOT connected!');
+      return res.status(500).json({ message: 'Database is not connected' });
+    }
+
+    const db = mongoose.connection.db;
+    const collections = await db.listCollections().toArray();
+    console.log(
+      '✅ Available Collections:',
+      collections.map((c) => c.name)
+    );
+
+    if (!collections.some((c) => c.name === 'Journeys')) {
+      console.error("❌ Collection 'journeys' does not exist!");
+      return res.status(500).json({ message: 'Collection does not exist' });
+    }
+
+    const count = await db.collection('Journeys').countDocuments();
+    /*     const sampleData = await db.collection('Journeys').findOne();
+    console.log('Sample Journey:', sampleData); */
+    console.log('✅ Test Query Result:', count);
+    res.json({ totalJourneys: count });
   } catch (error) {
-    console.error('Test Query Error:', error.message);
+    console.error('❌ Test Query Error:', error.message);
     res.status(500).json({ message: error.message });
   }
 });
