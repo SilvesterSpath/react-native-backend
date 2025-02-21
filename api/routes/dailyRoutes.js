@@ -1,5 +1,5 @@
 const express = require('express');
-const MultilingualDailyContent = require('../schemas/dailySchema'); // Adjust if needed
+const MultilingualDailyContent = require('../../schemas/dailySchema'); // Adjust if needed
 const authenticateJWT = require('../middlewares/auth');
 
 const router = express.Router();

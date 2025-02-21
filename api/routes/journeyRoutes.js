@@ -1,5 +1,5 @@
 const express = require('express');
-const Journey = require('../models/journey');
+const Journey = require('../../schemas/journeySchema');
 const authenticateJWT = require('../middlewares/auth');
 
 const router = express.Router();

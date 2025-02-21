@@ -1,5 +1,5 @@
 const express = require('express');
-const MultilingualMenuContent = require('../schemas/menuSchema'); // Adjust if needed
+const MultilingualMenuContent = require('../../schemas/menuSchema'); // Adjust if needed
 const authenticateJWT = require('../middlewares/auth');
 
 const router = express.Router();
