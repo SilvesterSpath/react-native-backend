@@ -11,6 +11,7 @@ const dailyRoutes = require('./routes/dailyRoutes');
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 connectDB(); // Connect to MongoDB
 
