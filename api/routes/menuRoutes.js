@@ -16,7 +16,10 @@ router.get('/', async (req, res) => {
 
 // Protected route - Example
 router.get('/protected', authenticateJWT, async (req, res) => {
-  res.json({ message: 'You have accessed a protected route', user: req.user });
+  res.json({
+    message: 'You have accessed a protected menu route',
+    user: req.user,
+  });
 });
 
 module.exports = router;

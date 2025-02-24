@@ -4,6 +4,7 @@ const authenticateJWT = require('../middlewares/auth');
 
 const router = express.Router();
 
+// Public route - Get all journey content
 router.get('/', async (req, res) => {
   try {
     const journeys = await Journey.find();
@@ -15,7 +16,10 @@ router.get('/', async (req, res) => {
 
 // Example of a protected route
 router.get('/protected', authenticateJWT, async (req, res) => {
-  res.json({ message: 'You have accessed a protected route', user: req.user });
+  res.json({
+    message: 'You have accessed a protected journey route',
+    user: req.user,
+  });
 });
 
 module.exports = router;
