@@ -18,7 +18,7 @@ async function getImagesData() {
     const files = fs.readdirSync(dirPath);
 
     for (const item of files) {
-      if (path.extname(item).toLowerCase() === '.jpg') {
+      if (path.extname(item).toLowerCase() === '.webp') {
         const filePath = path.join(dirPath, item);
         const imageData = fs.readFileSync(filePath).toString('base64');
         const contentType = mime.lookup(filePath);
