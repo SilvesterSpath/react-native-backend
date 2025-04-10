@@ -22,7 +22,9 @@ app.use('/api/journeys', journeyRoutes);
 app.use('/api/menus', menuRoutes);
 app.use('/api/daily', dailyRoutes);
 app.use('/api/images', imageRoutes);
-app.use('api/payment', stripeRoutes);
+app.use('/api/payment', stripeRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () =>
+  console.log(`🚀 Server running on port ${PORT}`)
+);
