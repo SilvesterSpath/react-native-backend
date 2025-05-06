@@ -68,4 +68,42 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
+// Forgot Password - Step 1: Check user exists
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email, firstname } = req.body;
+    const user = await User.findOne({ email, firstname });
+    // For security, always return success message
+    if (!user) {
+      return res
+        .status(200)
+        .json({ message: 'If the user exists, you can reset the password.' });
+    }
+    // User exists, allow frontend to proceed
+    return res
+      .status(200)
+      .json({ message: 'User found. You can reset the password.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error processing request.' });
+  }
+});
+
+// Forgot Password - Step 2: Reset password
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { email, firstname, newPassword } = req.body;
+    const user = await User.findOne({ email, firstname });
+    if (!user) {
+      // For security, do not reveal user existence
+      return res.status(400).json({ message: 'Invalid request.' });
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+    res.status(200).json({ message: 'Password reset successful.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error resetting password.' });
+  }
+});
+
 module.exports = router;
